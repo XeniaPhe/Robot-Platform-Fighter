@@ -1,0 +1,1 @@
+These are the third party assets I used, I deleted the unused content and left the main folders
