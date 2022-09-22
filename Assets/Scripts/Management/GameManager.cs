@@ -124,7 +124,7 @@ namespace RobotFighter.Core
                     }
 
                     if (timer >= roundTime)
-                        OpenResultScreen();
+                        OpenResultScreen(true);
 
                     break;
                 case GameState.Ending:
@@ -145,11 +145,27 @@ namespace RobotFighter.Core
             robots.ForEach(r => r.enabled = true);
         }
 
-        internal void OpenResultScreen()
+        internal void OpenResultScreen(bool timeout = false)
         {
             timer = 0;
             state = GameState.Ending;
-            uiManager.EnableResultsScreen(robots.Count, player.Score);
+
+            int rank = 1;
+            if (timeout)
+            {
+
+                foreach (var robot in robots)
+                {
+                    if (robot.rb.mass > player.rb.mass)
+                        rank++;
+                }
+            }
+            else
+            {
+                rank = robots.Count;
+            }
+
+            uiManager.EnableResultsScreen(rank, player.Score);
         }
 
         //Instantiates the robots and places them on their places on the platform
